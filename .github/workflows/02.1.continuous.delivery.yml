@@ -39,3 +39,13 @@ jobs:
         echo "Next version is $next_version"
         echo "next_version=$next_version" >> "$GITHUB_OUTPUT"
 
+    - name: Create tag for the next version
+      run: |
+        git config --global user.name "${GITHUB_ACTOR}"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git tag -a "$next_version" -m "Version $next_version"
+        git push origin "$next_version"
+      env:
+        next_version: ${{ steps.get_next_version.outputs.next_version }}-pre-release
+
+
