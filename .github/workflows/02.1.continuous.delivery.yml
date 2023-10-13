@@ -1,0 +1,22 @@
+name: Version Changes to the Main Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  version-main-branch-changes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get last version number
+      id: get_last_version
+      run: |
+        # Retrieve the last git tag, as we will only be processing one delivery line.
+        last_version=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+        echo "Last version is $last_version"
+        echo "last_version=$last_version" >> "$GITHUB_OUTPUT"
