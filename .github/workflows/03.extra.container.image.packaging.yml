@@ -1,7 +1,7 @@
 name: Package Container Image
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
